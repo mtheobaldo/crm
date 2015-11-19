@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 
-{% block title %}Clock In{%endblock%}
+{% block title %}{{ call }}{%endblock%}
 
 {% block navbar-left %}
   {% include "_navbar.html" with active_link="inout" %}
@@ -18,33 +17,26 @@
 
 {% block container %}
 
-<div class="formbox" style="padding-top: 60px; padding-left: 15px;">
+<div class="box" style="padding-top: 60px; padding-left: 15px;">
 
-<h1>{{ contact.get_full_name }} </h1>
+<h2 text-align="center">Call Record</h2>
 <table class="table" style="margin-top:50px;">
 <tbody>
 <tr>
-	<th >Company:</th>
-	<td>{{ contact.company }}</td>
+	<th>Opportunity: </th>
+	<td>{{ object.opportunity }}</td>
 </tr>
 <tr>
-	<th>Name:</th>
-	<td>{{ contact.get_full_name }}</td>
+	<th>Call Made On:</th>
+	<td>{{ object.date }}</td>
 </tr>
 <tr>
-	<th>Address:</th>
-	<td>{{ contact.address1 }}<br>
-		{{ contact.address2 }}<br>
-		{{ contact.city }}, {{ contact.state }} {{ contact.zipcode }}<br>
-		{{ contact.country }}</td>
+	<th>Call Made By:</th>
+	<td>{{ object.user }}</td>
 </tr>
 <tr>
-	<th>Phone:</th>
-	<td>{{ contact.phone }}</td>
-</tr>
-<tr>
-	<th>Email:</th>
-	<td>{{ contact.email }}</td>
+	<th>Notes:</th>
+	<td>{{ object.notes }}</td>
 </tr>
 </tbody>
 </table>

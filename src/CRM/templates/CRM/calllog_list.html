@@ -22,9 +22,9 @@
 <div class="formbox" style="padding-top: 60px; padding-left: 15px;">
 
 
-<h1>List of Contacts </h1>
-{% for contact in object_list %}
-	<a  href="{% url 'crm:contactdetail' contact.id %}">{{ contact.get_full_name }}</a>
+<h1>List of Calls</h1>
+{% for call in object_list %}
+	<a  href="{% url 'crm:callinfo' call.id %}">{{ call }}</a>
 
 {% empty %}
 	<p>Your address book is empty</p>

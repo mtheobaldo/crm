@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}Clock In{%endblock%}
+{% block title %}Record Call{%endblock%}
 
 {% block navbar-left %}
   {% include "_navbar.html" with active_link="inout" %}
@@ -23,7 +23,7 @@
 <form class="form" action="." method="POST">
   {% csrf_token %}
   {{ form|crispy }}
-  <button class="btn btn-primary">{% if object %}Update{% else %}Create{% endif %}</button>
+  <button class="btn btn-primary">{% if object %}Update{% else %}Record{% endif %}</button>
 </form>
 </div>
 {% endblock %}
