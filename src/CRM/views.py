@@ -41,11 +41,11 @@ class ViewStageView(DetailView):
 
 class CreateStageView(CreateView):
 	model = Stage
-	fields = ['name, order, description, value']
+	fields = ['name', 'order', 'description', 'value']
 
 class UpdateStageView(UpdateView):
 	model = Stage
-	fields = ['name, order, description, value']
+	fields = ['name', 'order', 'description', 'value']
 
 class DeleteStageView(DeleteView):
 	model = Stage
@@ -64,11 +64,11 @@ class ViewCompanyView(DetailView):
 
 class UpdateCompanyView(UpdateView):
 	model = Company
-	fields = ['name, website, address1, address2, city, zipcode, country, phone']
+	fields = ['name', 'website', 'address1', 'address2', 'city', 'zipcode', 'country', 'phone']
 
 class CreateCompanyView(CreateView):
 	model = Company
-	fields = ['name, website, address1, address2, city, zipcode, country, phone']
+	fields = ['name', 'website', 'address1', 'address2', 'city', 'zipcode', 'country', 'phone']
 
 class DeleteCompanyView(DeleteView):
 	model = Company
@@ -87,11 +87,11 @@ class ViewContactView(DetailView):
 
 class UpdateContactView(UpdateView):
 	model = Contact
-	fields = ['company ,first_name, last_name, email, address1, address2, city, zipcode, country, phone']
+	fields = ['company', 'first_name', 'last_name', 'email', 'address1', 'address2', 'city', 'zipcode', 'country', 'phone']
 
 class CreateContactView(CreateView):
 	model = Contact
-	fields = ['company ,first_name, last_name, email, address1, address2, city, zipcode, country, phone']
+	fields = ['company', 'first_name', 'last_name', 'email', 'address1', 'address2', 'city', 'zipcode', 'country', 'phone']
 
 class DeleteContactView(DeleteView):
 	model = Contact
@@ -110,11 +110,11 @@ class ViewReminderView(DetailView):
 
 class CreateReminderView(CreateView):
 	model = Reminder
-	fields = ['opportunity, date, note']
+	fields = ['opportunity', 'date', 'note']
 
 class UpdateReminderView(UpdateView):
 	model = Reminder
-	fields = ['note, completed']
+	fields = ['note', 'completed']
 
 
 class DeleteReminderView(DeleteView):
@@ -134,11 +134,11 @@ class ViewCampaignView(DetailView):
 
 class CreateCampaignView(CreateView):
 	model = Campaign
-	fields = ['name, description']
+	fields = ['name', 'description']
 
 class UpdateCampaignView(UpdateView):
 	model = Campaign
-	fields = ['name, description']
+	fields = ['name', 'description']
 
 
 class DeleteCampaignView(DeleteView):
@@ -158,12 +158,11 @@ class ViewOpportunityView(DetailView):
 
 class CreateOpportunityView(CreateView):
 	model = Opportunity
-	fields = ['stage, company, contact, value, source, user, create_date']
+	fields = ['stage', 'company', 'contact', 'value', 'source', 'user']
 
 class UpdateOpportunityView(UpdateView):
 	model = Opportunity
-	fields = ['stage, company, contact, value, source, user, create_date']
-
+	fields = ['stage', 'company', 'contact', 'value', 'source', 'user']
 
 class DeleteOpportunityView(DeleteView):
 	model = Opportunity
