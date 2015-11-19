@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from django.views import render
-from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView DeleteView, View
-from .models import Report, Stage, Company, Contact, Opportunity, Reminder, CallLog
+from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView, DeleteView, View
+from .models import Report, Stage, Company, Contact, Opportunity, Reminder, CallLog, Campaign
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
 # Create your views here.
 
 
@@ -16,13 +16,13 @@ class ViewCallView(DetailView):
 
 class CreateCallView(CreateView):
 	model = CallLog
-	fields = ['opportunity, date, note']
+	fields = ['opportunity', 'note']
 
-	def form_valid(self, form):
-		call = form.save(commit=False)
-		call.user = self.request.user
-		call.save()
-		return super(CreateCallView, self).form_valid(form)
+	# def form_valid(self, form):
+	# 	call = form.save(commit=False)
+	# 	call.user = self.request.user
+	# 	call.save()
+	# 	return super(CreateCallView, self).form_valid(form)
 
 class DeleteCallView(DeleteView):
 	model = Company
@@ -43,7 +43,7 @@ class CreateStageView(CreateView):
 	model = Stage
 	fields = ['name, order, description, value']
 
-class EditStageView(UpdateView):
+class UpdateStageView(UpdateView):
 	model = Stage
 	fields = ['name, order, description, value']
 
@@ -62,7 +62,7 @@ class ListCompanyView(ListView):
 class ViewCompanyView(DetailView):
 	model = Company
 
-class EditCompanyView(UpdateView):
+class UpdateCompanyView(UpdateView):
 	model = Company
 	fields = ['name, website, address1, address2, city, zipcode, country, phone']
 
@@ -85,7 +85,7 @@ class ListContactView(ListView):
 class ViewContactView(DetailView):
 	model = Contact
 
-class EditCompanyView(UpdateView):
+class UpdateContactView(UpdateView):
 	model = Contact
 	fields = ['company ,first_name, last_name, email, address1, address2, city, zipcode, country, phone']
 
@@ -112,7 +112,7 @@ class CreateReminderView(CreateView):
 	model = Reminder
 	fields = ['opportunity, date, note']
 
-class EditReminderView(UpdateView):
+class UpdateReminderView(UpdateView):
 	model = Reminder
 	fields = ['note, completed']
 
@@ -136,31 +136,7 @@ class CreateCampaignView(CreateView):
 	model = Campaign
 	fields = ['name, description']
 
-class EditCampaignView(UpdateView):
-	model = Campaign
-	fields = ['name, description']
-
-
-class DeleteCampaignView(DeleteView):
-	model = Campaign
-	#success_url = reverse_lazy('')
-
-####################End######################
-
-
-## Campaign Views ##
-class ListCampaignView(ListView):
-	model = Campaign
-	paginate_by = 10
-
-class ViewCampaignView(DetailView):
-	model = Campaign
-
-class CreateCampaignView(CreateView):
-	model = Campaign
-	fields = ['name, description']
-
-class EditCampaignView(UpdateView):
+class UpdateCampaignView(UpdateView):
 	model = Campaign
 	fields = ['name, description']
 
@@ -184,7 +160,7 @@ class CreateOpportunityView(CreateView):
 	model = Opportunity
 	fields = ['stage, company, contact, value, source, user, create_date']
 
-class EditOpportunityView(UpdateView):
+class UpdateOpportunityView(UpdateView):
 	model = Opportunity
 	fields = ['stage, company, contact, value, source, user, create_date']
 

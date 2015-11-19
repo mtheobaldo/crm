@@ -123,6 +123,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = join(BASE_DIR, 'media')
+SITE_ID = 1
 
 ALLOWED_HOSTS = []
 

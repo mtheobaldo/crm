@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Report, Stage, Company, Contact, Opportunity, Reminder, CallLog
 
 
-urlpatterns = patterns('',
+urlpatterns = [
 	###Calls###
     url(r'^call/(?P<pk>\d+)/$', login_required(views.ViewCallView.as_view()), name="callinfo"),
     url(r'call/all/$', login_required(views.ListCallView.as_view()), name="calllist"),
@@ -47,7 +47,7 @@ urlpatterns = patterns('',
     url(r' x /create/$', login_required(views.CreateCampaignView.as_view()), name=" x create"),
     url(r' x /delete/$', login_required(views.DeleteCampaignView.as_view()), name=" x delete"),
     url(r' x /update/$', login_required(views.UpdateCampaignView.as_view()), name=" x update"),
-)
+]
 
 	# ### y ###
  #    url(r'^ x /(?P<pk>\d+)/$', login_required(views.View y View.as_view()), name=" x info"),

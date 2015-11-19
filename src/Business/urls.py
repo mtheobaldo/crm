@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^users/', include(profiles.urls, namespace='profiles')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include(accounts.urls, namespace='accounts')),
-    url(r'^crm/$', include('CRM', namespace='crm')),
+    url(r'^', include('CRM.urls', namespace='crm')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
