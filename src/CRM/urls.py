@@ -3,9 +3,11 @@ from django.conf.urls.static import static
 from . import views
 from django.contrib.auth.decorators import login_required
 from .models import Report, Stage, Company, Contact, Opportunity, Reminder, CallLog
-
+from django.views.generic import TemplateView
 
 urlpatterns = [
+    ###Dashboard###
+    url(r'^dashboard/$', login_required(TemplateView.as_view(template_name="CRM/dashboard.html")), name="dashboard"),
 	###Calls###
     url(r'^call/(?P<pk>\d+)/$', login_required(views.ViewCallView.as_view()), name="callinfo"),
     url(r'call/all/$', login_required(views.ListCallView.as_view()), name="calllist"),
@@ -42,11 +44,11 @@ urlpatterns = [
     url(r'opportunity/delete/$', login_required(views.DeleteOpportunityView.as_view()), name="opportunitydelete"),
     url(r'opportunity/update/$', login_required(views.UpdateOpportunityView.as_view()), name="opportunityupdate"),
     ###Campaigns###
-    url(r'^ x /(?P<pk>\d+)/$', login_required(views.ViewCampaignView.as_view()), name=" x info"),
-    url(r' x /all/$', login_required(views.ListCampaignView.as_view()), name=" x list"),
-    url(r' x /create/$', login_required(views.CreateCampaignView.as_view()), name=" x create"),
-    url(r' x /delete/$', login_required(views.DeleteCampaignView.as_view()), name=" x delete"),
-    url(r' x /update/$', login_required(views.UpdateCampaignView.as_view()), name=" x update"),
+    url(r'^campaign/(?P<pk>\d+)/$', login_required(views.ViewCampaignView.as_view()), name="campaigninfo"),
+    url(r'campaign/all/$', login_required(views.ListCampaignView.as_view()), name="campaignlist"),
+    url(r'campaign/create/$', login_required(views.CreateCampaignView.as_view()), name="campaigncreate"),
+    url(r'campaign/delete/$', login_required(views.DeleteCampaignView.as_view()), name="campaigndelete"),
+    url(r'campaign/update/$', login_required(views.UpdateCampaignView.as_view()), name="campaignupdate"),
 ]
 
 	# ### y ###

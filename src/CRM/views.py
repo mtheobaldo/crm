@@ -17,12 +17,14 @@ class ViewCallView(DetailView):
 class CreateCallView(CreateView):
 	model = CallLog
 	fields = ['opportunity', 'note']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
-	# def form_valid(self, form):
-	# 	call = form.save(commit=False)
-	# 	call.user = self.request.user
-	# 	call.save()
-	# 	return super(CreateCallView, self).form_valid(form)
+	def form_valid(self, form):
+		call = form.save(commit=False)
+		call.user = self.request.user
+		call.save()
+		return super(CreateCallView, self).form_valid(form)
 
 class DeleteCallView(DeleteView):
 	model = Company
@@ -42,10 +44,14 @@ class ViewStageView(DetailView):
 class CreateStageView(CreateView):
 	model = Stage
 	fields = ['name', 'order', 'description', 'value']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 class UpdateStageView(UpdateView):
 	model = Stage
 	fields = ['name', 'order', 'description', 'value']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 class DeleteStageView(DeleteView):
 	model = Stage
@@ -65,10 +71,14 @@ class ViewCompanyView(DetailView):
 class UpdateCompanyView(UpdateView):
 	model = Company
 	fields = ['name', 'website', 'address1', 'address2', 'city', 'zipcode', 'country', 'phone']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 class CreateCompanyView(CreateView):
 	model = Company
 	fields = ['name', 'website', 'address1', 'address2', 'city', 'zipcode', 'country', 'phone']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 class DeleteCompanyView(DeleteView):
 	model = Company
@@ -88,10 +98,14 @@ class ViewContactView(DetailView):
 class UpdateContactView(UpdateView):
 	model = Contact
 	fields = ['company', 'first_name', 'last_name', 'email', 'address1', 'address2', 'city', 'zipcode', 'country', 'phone']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 class CreateContactView(CreateView):
 	model = Contact
 	fields = ['company', 'first_name', 'last_name', 'email', 'address1', 'address2', 'city', 'zipcode', 'country', 'phone']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 class DeleteContactView(DeleteView):
 	model = Contact
@@ -111,10 +125,14 @@ class ViewReminderView(DetailView):
 class CreateReminderView(CreateView):
 	model = Reminder
 	fields = ['opportunity', 'date', 'note']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 class UpdateReminderView(UpdateView):
 	model = Reminder
 	fields = ['note', 'completed']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 
 class DeleteReminderView(DeleteView):
@@ -135,10 +153,14 @@ class ViewCampaignView(DetailView):
 class CreateCampaignView(CreateView):
 	model = Campaign
 	fields = ['name', 'description']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 class UpdateCampaignView(UpdateView):
 	model = Campaign
 	fields = ['name', 'description']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 
 class DeleteCampaignView(DeleteView):
@@ -159,10 +181,14 @@ class ViewOpportunityView(DetailView):
 class CreateOpportunityView(CreateView):
 	model = Opportunity
 	fields = ['stage', 'company', 'contact', 'value', 'source', 'user']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 class UpdateOpportunityView(UpdateView):
 	model = Opportunity
 	fields = ['stage', 'company', 'contact', 'value', 'source', 'user']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 class DeleteOpportunityView(DeleteView):
 	model = Opportunity

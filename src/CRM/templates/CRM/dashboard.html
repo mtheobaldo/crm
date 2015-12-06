@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block title %}CRM Dashboard{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
+        ]);
+        var options = {
+          // title: 'My Daily Activities'
+          // legend: 'none',
+          is3D: true,
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+      }
+    </script>
+{% endblock %}
+{% block container %} 
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="jumbotron">
+                <h1>Welcome {{ user.name }}</a>
+                <p>Let's go manage those sales relationships...</p>
+             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Upcoming Reminders
+                        <span class="text-right pull-right">
+                            <a href="#" class="btn btn-primary btn-sm mdi-action-list" style="margin-top: -7px;" title="List all Opportunities"></a>
+                        </span>
+                </div>
+                <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <th>Opportunity</th>
+                        <th>Note</th>
+                        <th>Due Date</th>
+                    </tr>
+                    {% for opportunity in user.opportunity_set.all %}
+                    <tr>
+                        <td><a href="{% url 'crm:opportunityinfo' opportunity.id %}">{{ opportunity }}</a></td>
+                        <td>{{ opportunity.reminder_set.last }}</td>
+                        <td>{{ opportunity.reminder_set.last.date }}</td>
+                    </tr>
+                    {% empty %}
+                    <p>You have no current reminders</p>
+                    {% endfor %}
+                </table>
+                    <div class="pull-right">
+                    <a href="#" class="btn btn-primary btn-fab btn-raised mdi-content-add-box text-right" title="Create New Reminder"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Newest Opportunities
+                        <span class="text-right pull-right">
+                            <a href="#" class="btn btn-info btn-sm mdi-action-list" style="margin-top: -7px;" title="List all Opportunities"></a>
+                        </span>
+                </div>
+                <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <th>Opportunity</th>
+                        <th>Stage</th>
+                        <th>Value</th>
+                        <th>Creation Date</th>
+                    </tr>
+                    {% for opportunity in user.opportunity_set.all %}
+                    <tr>
+                        <td><a href="{% url 'crm:opportunityinfo' opportunity.id %}" class="text-info">{{ opportunity }}</a></td>
+                        <td>{{ opportunity.stage }}</td>
+                        <td>{{ opportunity.value }}</td>
+                        <td>{{ opportunity.create_date }}</td>
+                    </tr>
+                    {% empty %}
+                    <a>You have no opportunities santa's not coming to your house</a>
+                    {% endfor %}
+                </table>
+                        <div class="pull-right">
+                        <a href="#" class="btn btn-info btn-fab btn-raised btn-sm mdi-content-add-box text-right"></a>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Opportunities By Stage
+                        <span class="text-right pull-right">
+                            <a href="#" class="btn btn-primary btn-sm mdi-action-list" style="margin-top: -7px;" title="List all Opportunities"></a>
+                        </span>
+                </div>
+                <div class="panel-body">
+                    <div id="piechart" style="height: 500px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Top Producers
+                        <span class="text-right pull-right">
+                            <a href="#" class="btn btn-primary btn-sm mdi-action-list" style="margin-top: -7px;" title="List all Opportunities"></a>
+                        </span>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Opportunities Closed</th>
+                    </tr>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>28</td>
+                    </tr>
+                    <tr>
+                        <td>Jane Doe</td>
+                        <td>27</td>
+                    </tr>
+                    <tr>
+                        <td>Johnny Smith</td>
+                        <td>14</td>
+                    </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

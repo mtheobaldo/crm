@@ -43,10 +43,10 @@ class Contact(models.Model):
 	email = models.EmailField(max_length=200, blank=True, null=True)
 
 	def get_full_name(self):
-		return self.first_name + " " + self.last_name
+		return str(self.first_name) + " " + str(self.last_name)
 
 	def __unicode__(self):
-		return self.get_full_name
+		return self.get_full_name()
 
 class Campaign(models.Model):
 	name = models.CharField(max_length=200)
@@ -69,9 +69,9 @@ class Opportunity(models.Model):
 
 	def __unicode__(self):
 		if self.company:
-			return self.company
+			return str(self.company)
 		else:
-			return self.contact
+			return str(self.contact)
 
 class Reminder(models.Model):
 	opportunity = models.ForeignKey(Opportunity)
@@ -80,7 +80,7 @@ class Reminder(models.Model):
 	completed = models.BooleanField(default=False)
 
 	def __unicode__(self):
-		return self.opportunity + ": " + self.note
+		return str(self.note)
 
 class Report(models.Model):
 	name = models.CharField(max_length=200)
@@ -96,7 +96,7 @@ class CallLog(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
 	def __unicode__(self):
-		return self.opportunity + " on " + self.date.strftime("%Y-%m-%d") + " by " + self.user.get_full_name
+		return str(self.opportunity) + " on " + self.date.strftime("%Y-%m-%d") + " by " + self.user.get_full_name()
 
 class OpportunityStage(models.Model):
 	opportunity = models.ForeignKey(Opportunity)
