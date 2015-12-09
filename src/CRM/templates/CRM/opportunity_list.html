@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Opportunities{% endblock %}
+
+{% block container %}
+<h1>Opportunities</h1>
+  <a class="btn btn-success" style="background:#009688; margin-top:-45px; float:right;" href="{% url 'crm:opportunitycreate' %}">Add a New Opportunity</a>
+
+  <div class="list-group">
+    {% if opportunity_list %}
+    {% for opportunity in opportunity_list %}
+    <a class="list-group-item" href="{% url 'crm:opportunityinfo' opportunity.id %}">{{ opportunity }}</a>
+    {% endfor %}
+    {% else %}
+    <p>No opportunities to list.</p>
+    {% endif %}
+  </div>
+{% endblock %}

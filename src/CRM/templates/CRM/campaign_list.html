@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block title %}Campaigns{% endblock %}
+
+{% block container %}
+<h1>Campaigns</h1>
+  <a class="btn btn-success" style="background:#009688; margin-top:-45px; float:right;" href="{% url 'crm:campaigncreate' %}">Add a New Campaign</a>
+
+  <div class="list-group">
+    {% if campaign_list %}
+    {% for campaign in campaign_list %}
+    <a class="list-group-item" href="{% url 'crm:campaigninfo' campaign.id %}">{{ campaign }}</a>
+    {% endfor %}
+    {% else %}
+    <p>No campaigns to list.</p>
+    {% endif %}
+  </div>
+
+{% endblock %}

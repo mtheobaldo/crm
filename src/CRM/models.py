@@ -20,6 +20,7 @@ class Company(models.Model):
 	address1 = models.CharField(max_length=200, blank=True, null=True)
 	address2 = models.CharField(max_length=200, blank=True, null=True)
 	city = models.CharField(max_length=200, blank=True, null=True)
+	state = models.CharField(max_length=200, blank=True, null=True)
 	zipcode = models.CharField(max_length=200, blank=True, null=True)
 	country = models.CharField(max_length=200, blank=True, null=True)
 	phone = models.CharField(max_length=200, blank=True, null=True)
@@ -37,6 +38,7 @@ class Contact(models.Model):
 	address1 = models.CharField(max_length=200, blank=True, null=True)
 	address2 = models.CharField(max_length=200, blank=True, null=True)
 	city = models.CharField(max_length=200, blank=True, null=True)
+	state = models.CharField(max_length=200, blank=True, null=True)
 	zipcode = models.CharField(max_length=200, blank=True, null=True)
 	country = models.CharField(max_length=200, blank=True, null=True)
 	phone = models.CharField(max_length=200, blank=True, null=True)
@@ -96,7 +98,7 @@ class CallLog(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
 	def __unicode__(self):
-		return str(self.opportunity) + " on " + self.date.strftime("%Y-%m-%d") + " by " + self.user.get_full_name()
+		return str(self.opportunity) + " on " + str(self.date.strftime("%Y-%m-%d")) + " by " + str(self.user.get_full_name())
 
 class OpportunityStage(models.Model):
 	opportunity = models.ForeignKey(Opportunity)
@@ -105,6 +107,9 @@ class OpportunityStage(models.Model):
 	timestamp = models.DateTimeField(auto_now_add=True)
 
 	def __unicode__(self):
-		return self.opportunity + " moved to " + self.stage
+		return str(self.opportunity) + " moved to " + str(self.stage)
+
+	class Meta:
+		ordering = ['-timestamp']
 
 

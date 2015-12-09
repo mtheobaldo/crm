@@ -1,9 +1,43 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView, DeleteView, View
-from .models import Report, Stage, Company, Contact, Opportunity, Reminder, CallLog, Campaign
-from django.core.urlresolvers import reverse_lazy, reverse
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, render_to_response
+from django.template import RequestContext
+from django.views.generic import FormView, ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.contrib.auth.models import User
+from django.db.models import Count
+import datetime
+from itertools import chain
+
+from .models import Stage, Company, Contact, Campaign, Opportunity, Reminder, Report, CallLog, OpportunityStage
 # Create your views here.
+
+#the search query
+def search(request):
+    if request.method == 'GET':
+        if request.GET.get('q'):
+            contact_results = []
+            opp_results =  []
+            note_results = []
+            search_words = "%s" % (request.GET.get('q'))
+            search_word_list = search_words.split(' ')
+            for search_word in search_word_list:
+                print search_word
+                contact_firstname = Contact.objects.filter(first_name__icontains = search_word)
+                contact_lastname = Contact.objects.filter(last_name__icontains = search_word)
+                contact_company = Contact.objects.filter(company__name__icontains = search_word)
+                opp_firstname = Opportunity.objects.filter(contact__first_name__icontains = search_word)
+                opp_lastname = Opportunity.objects.filter(contact__last_name__icontains = search_word)
+                opp_stage = Opportunity.objects.filter(stage__name__icontains = search_word)
+                contact_results = contact_results + list(contact_firstname) + list(contact_lastname) + list(contact_company)
+                opp_results = opp_results + list(opp_firstname) + list(opp_lastname) + list(opp_stage)
+                call_note = CallLog.objects.filter(note__icontains = search_word)
+                reminder_note = Reminder.objects.filter(note__icontains = search_word)
+                note_results = note_results + list(call_note) + list(reminder_note)
+
+        return render_to_response('crm/search_results.html', {'search':search_words, 'contacts': contact_results, 'opps': opp_results, 'notes': note_results}, context_instance=RequestContext(request))
+
+    return render_to_response('crm/search_results.html', context_instance=RequestContext(request))
+
 
 
 ## Call Views ##
@@ -27,8 +61,9 @@ class CreateCallView(CreateView):
 		return super(CreateCallView, self).form_valid(form)
 
 class DeleteCallView(DeleteView):
-	model = Company
-	#success_url = reverse_lazy('')
+	model = CallLog
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 ####################End######################
 
@@ -55,7 +90,8 @@ class UpdateStageView(UpdateView):
 
 class DeleteStageView(DeleteView):
 	model = Stage
-	#success_url = reverse_lazy('')
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 ####################End######################
 
@@ -70,19 +106,20 @@ class ViewCompanyView(DetailView):
 
 class UpdateCompanyView(UpdateView):
 	model = Company
-	fields = ['name', 'website', 'address1', 'address2', 'city', 'zipcode', 'country', 'phone']
+	fields = ['name', 'website', 'address1', 'address2', 'city', 'state', 'zipcode', 'country', 'phone']
 	def get_success_url(self):
 		return reverse('crm:dashboard')
 
 class CreateCompanyView(CreateView):
 	model = Company
-	fields = ['name', 'website', 'address1', 'address2', 'city', 'zipcode', 'country', 'phone']
+	fields = ['name', 'website', 'address1', 'address2', 'city', 'state', 'zipcode', 'country', 'phone']
 	def get_success_url(self):
 		return reverse('crm:dashboard')
 
 class DeleteCompanyView(DeleteView):
 	model = Company
-	#success_url = reverse_lazy('')
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 ####################End######################
 
@@ -97,20 +134,20 @@ class ViewContactView(DetailView):
 
 class UpdateContactView(UpdateView):
 	model = Contact
-	fields = ['company', 'first_name', 'last_name', 'email', 'address1', 'address2', 'city', 'zipcode', 'country', 'phone']
+	fields = ['company', 'first_name', 'last_name', 'email', 'address1', 'address2', 'city', 'state', 'zipcode', 'country', 'phone']
 	def get_success_url(self):
 		return reverse('crm:dashboard')
 
 class CreateContactView(CreateView):
 	model = Contact
-	fields = ['company', 'first_name', 'last_name', 'email', 'address1', 'address2', 'city', 'zipcode', 'country', 'phone']
+	fields = ['company', 'first_name', 'last_name', 'email', 'address1', 'address2', 'city', 'state', 'zipcode', 'country', 'phone']
 	def get_success_url(self):
 		return reverse('crm:dashboard')
 
 class DeleteContactView(DeleteView):
 	model = Contact
-	#success_url = reverse_lazy('')
-
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 ####################End######################
 
 
@@ -137,7 +174,8 @@ class UpdateReminderView(UpdateView):
 
 class DeleteReminderView(DeleteView):
 	model = Reminder
-	#success_url = reverse_lazy('')
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 ####################End######################
 
@@ -165,7 +203,8 @@ class UpdateCampaignView(UpdateView):
 
 class DeleteCampaignView(DeleteView):
 	model = Campaign
-	#success_url = reverse_lazy('')
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
 ####################End######################
 
@@ -192,8 +231,27 @@ class UpdateOpportunityView(UpdateView):
 
 class DeleteOpportunityView(DeleteView):
 	model = Opportunity
-	#success_url = reverse_lazy('')
+	def get_success_url(self):
+		return reverse('crm:dashboard')
 
-####################End######################
+##########################################
 
+##OpportunityStage View##
+class CreateOpportunityStageView(CreateView):
+	model = OpportunityStage
+	fields = ['opportunity','stage']
+	def get_success_url(self):
+		return reverse('crm:dashboard')
+
+	def form_valid(self):
+		opstage = form.save(commit=False)
+		opstage.user = User.objects.get(user=self.request.user)
+		opstage.opportunity.stage = opstage.stage
+		opstage.save()
+		return super(CreateOpportunityStageView, self).form_valid(form)
+
+
+
+class ReportsView(ListView):
+	model = Report
 

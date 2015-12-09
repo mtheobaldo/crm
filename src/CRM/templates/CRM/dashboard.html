@@ -49,18 +49,22 @@
                         <th>Note</th>
                         <th>Due Date</th>
                     </tr>
-                    {% for opportunity in user.opportunity_set.all %}
+                    {% for opportunity in opportunity_set.all %}
+                    {% for reminder in opportunity.reminder_set.all %}
                     <tr>
                         <td><a href="{% url 'crm:opportunityinfo' opportunity.id %}">{{ opportunity }}</a></td>
-                        <td>{{ opportunity.reminder_set.last }}</td>
-                        <td>{{ opportunity.reminder_set.last.date }}</td>
+                        <td>{{ reminder }}</td>
+                        <td>{{ reminder.date }}</td>
                     </tr>
+                    {% empty %}
+                    <p>You have no current reminders</p>
+                    {% endfor %}
                     {% empty %}
                     <p>You have no current reminders</p>
                     {% endfor %}
                 </table>
                     <div class="pull-right">
-                    <a href="#" class="btn btn-primary btn-fab btn-raised mdi-content-add-box text-right" title="Create New Reminder"></a>
+                    <a href="{% url 'crm:remindercreate' %}" class="btn btn-primary btn-fab btn-raised mdi-content-add-box text-right" title="Create New Reminder">+</a>
                     </div>
                 </div>
             </div>

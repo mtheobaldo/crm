@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Contacts{% endblock %}
+
+{% block container %}
+<h1>Contacts</h1>
+  <a class="btn btn-success" style="background:#009688; margin-top:-45px; float:right;" href="{% url 'crm:contactcreate' %}">Add a New Contact</a>
+
+  <div class="list-group">
+    {% if contact_list %}
+    {% for contact in contact_list %}
+    <a class="list-group-item" href="{% url 'crm:contactinfo' contact.id %}">{{ contact }}</a>
+    {% endfor %}
+    {% else %}
+    <p>No contacts to list.</p>
+    {% endif %}
+  </div>
+{% endblock %}

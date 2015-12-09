@@ -2,44 +2,31 @@
 
 {% block title %}{{ call }}{%endblock%}
 
-{% block navbar-left %}
-  {% include "_navbar.html" with active_link="inout" %}
-{% endblock %}
 
-{% block navbar-right %}
-  {% if not user.is_authenticated %}
-<a class="btn btn-default" href="{% url 'accounts:login' %}" role="button">Log in</a>
-<a class="btn btn-primary" href="{% url 'accounts:signup' %}" role="button">Sign up</a>
-  {% else %}
-    {{ block.super }}
-  {% endif %}
-{% endblock %}
 
 {% block container %}
 
-<div class="box" style="padding-top: 60px; padding-left: 15px;">
-
-<h2 text-align="center">Call Record</h2>
-<table class="table" style="margin-top:50px;">
-<tbody>
-<tr>
-	<th>Opportunity: </th>
-	<td>{{ object.opportunity }}</td>
-</tr>
-<tr>
-	<th>Call Made On:</th>
-	<td>{{ object.date }}</td>
-</tr>
-<tr>
-	<th>Call Made By:</th>
-	<td>{{ object.user }}</td>
-</tr>
-<tr>
-	<th>Notes:</th>
-	<td>{{ object.note }}</td>
-</tr>
-</tbody>
-</table>
-
-</div>
+  <table class="table table-striped">
+    <thead>
+      <tr class="success">
+        <th>Opportunity</th>
+        <th>Date</th>
+        <th>Note</th>
+        <th>User</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ calllog.opportunity }}</td>
+        <td>{{ calllog.date }}</td>
+        <td>{{ calllog.note }}</td>
+        <td>{{ calllog.user }}</td>
+        <td><a href="{% url 'crm:callupdate' calllog.id %}"><span class="glyphicon glyphicon-edit"></span></a></td>
+        <td><a href="{% url 'crm:calldelete' calllog.id %}"><span class="glyphicon glyphicon-remove" style="color:red;"></a></td>
+      </tr>
+    </tbody>
+  </table>
+<a class="btn btn-success" style="background:#009688; float:right;" href="{% url 'crm:calllist' %}">Return to Call Log List</a>
 {% endblock %}
