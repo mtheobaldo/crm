@@ -9,7 +9,7 @@
 
 {% if contacts %}
 <div class="alert alert-success" style="margin-bottom:0; background:#009688;">
-  <a href="{% url 'crm:contactlist' %}" style="font-size:25px; color:white;">{{ contacts.0 }}</a>
+  <a href="{% url 'crm:contactlist' %}" style="font-size:25px; color:white;">All Contacts</a>
 </div>
 <div class="list-group">
   {% for contact in contacts %}
@@ -20,7 +20,7 @@
 
 {% if opps %}
 <div class="alert alert-warning" style="margin-bottom:0; background:#009688;">
-  <a href="{% url 'crm:opportunitylist' %}" style="font-size:25px; color:white;">{{ opps.0 }}</a>
+  <a href="{% url 'crm:opportunitylist' %}" style="font-size:25px; color:white;">All Opportunities</a>
 </div>
 <div class="list-group">
     {% for opp in opps %}
@@ -31,7 +31,7 @@
 
 {% if companies %}
 <div class="alert alert-info" style="margin-bottom:0; background:#009688;">
-  <a href="{% url 'crm:companylist' %}" style="font-size:25px; color:white;">{{ companies.0 }}</a>
+  <a href="{% url 'crm:companylist' %}" style="font-size:25px; color:white;">All Companies</a>
 </div>
 <div class="list-group">
   {% for company in companies %}

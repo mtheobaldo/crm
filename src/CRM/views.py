@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.db.models import Count
 import datetime
 from itertools import chain
+from django.conf import settings
 
 from .models import Stage, Company, Contact, Campaign, Opportunity, Reminder, Report, CallLog, OpportunityStage
 # Create your views here.
@@ -37,6 +38,21 @@ def search(request):
         return render_to_response('crm/search_results.html', {'search':search_words, 'contacts': contact_results, 'opps': opp_results, 'notes': note_results}, context_instance=RequestContext(request))
 
     return render_to_response('crm/search_results.html', context_instance=RequestContext(request))
+
+class Dashboard(ListView):
+    model = Opportunity
+    template_name = "crm/dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(Dashboard, self).get_context_data(**kwargs)
+
+        #Adding OpportunityStages to the templates' context
+        context["opportunity_stages"] = OpportunityStage.objects.all().order_by('-time_stamp')
+        context["reminders"] = Reminder.objects.all().order_by('-date')[:5]
+        context["stage_by_opp"] = Stage.objects.annotate(opp_count = Count('opportunity'))
+	context['opportunity_list'] = Opportunity.objects.all().order_by('-create_date')[:5]
+
+        return context
 
 
 
@@ -229,6 +245,17 @@ class UpdateOpportunityView(UpdateView):
 	def get_success_url(self):
 		return reverse('crm:dashboard')
 
+	def form_valid(form, self):
+		opp = form.save(commit= false)
+		if opp.stage.value != self.get_object().stage.value:
+
+			o = OpportunityStage()
+			o.opportunity = self.get_object()
+			o.user = self.request.user
+			o.save()
+		return super(UpdateOpportunityView, self).form_valid(form)
+
+
 class DeleteOpportunityView(DeleteView):
 	model = Opportunity
 	def get_success_url(self):
@@ -243,7 +270,7 @@ class CreateOpportunityStageView(CreateView):
 	def get_success_url(self):
 		return reverse('crm:dashboard')
 
-	def form_valid(self):
+	def form_valid(form, self):
 		opstage = form.save(commit=False)
 		opstage.user = User.objects.get(user=self.request.user)
 		opstage.opportunity.stage = opstage.stage

@@ -7,14 +7,16 @@
 
 {% block container %}
 
+<h1>Calls</h1>
+  <a class="btn btn-success" style="background:#009688; margin-top:-45px; float:right;" href="{% url 'crm:callcreate' %}">Add a New Call</a>
 
-<h1>List of Calls</h1>
-{% for call in object_list %}
-	<a  href="{% url 'crm:callinfo' call.id %}">{{ call }}</a>
-<p></p>
-{% empty %}
-	<p>Your address book is empty</p>
-{% endfor %}
-
+  <div class="list-group">
+    {% if calllog_list %}
+    {% for call in calllog_list %}
+    <a class="list-group-item" href="{% url 'crm:callinfo' call.id %}">{{ call }}</a>
+    {% endfor %}
+    {% else %}
+    <p>No calls to list.</p>
+    {% endif %}
+  </div>
 {% endblock %}
-

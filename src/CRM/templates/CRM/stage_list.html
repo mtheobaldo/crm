@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}all stages{%endblock%}
+
+
+{% block container %}
+
+<h1>Stages</h1>
+  <a class="btn btn-success" style="background:#009688; margin-top:-45px; float:right;" href="{% url 'crm:stagecreate' %}">Add a New Stage</a>
+
+  <div class="list-group">
+    {% if stage_list %}
+    {% for stage in stage_list %}
+    <a class="list-group-item" href="{% url 'crm:stageinfo' stage.id %}">{{ stage }}</a>
+    {% endfor %}
+    {% else %}
+    <p>No stages to list.</p>
+    {% endif %}
+  </div>
+{% endblock %}

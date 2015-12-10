@@ -113,3 +113,17 @@ class OpportunityStage(models.Model):
 		ordering = ['-timestamp']
 
 
+
+
+              # <div>
+              # <li>
+              # <form method="GET" action="{% url 'crm:search' %}" class="navbar-form" role="search">
+              # <div class="input-group">
+              #     <input type="text" class="form-control" placeholder="Search" name="q">
+              #     <div class="input-group-btn">
+              #         <button class="btn" type="submit"><i class="glyphicon glyphicon-search" style="color:white;"></i></button>
+              #     </div>
+              # </div>
+              # </form>
+              # </li>
+              # </div>

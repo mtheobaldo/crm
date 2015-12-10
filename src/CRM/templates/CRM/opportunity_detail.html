@@ -134,7 +134,7 @@ function initMap() {
                     {% for status in opportunity.opportunitystage_set.all %}
                     <tr>
                         <td>{{status.timestamp}}</td>
-                        <td>{{status.opportunity.state}}</td>
+                        <td>{{status.state}}</td>
                         <td>{{status.user}}</td>
                     </tr>
                     {% endfor %}

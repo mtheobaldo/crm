@@ -7,7 +7,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     ###Dashboard###
-    url(r'^dashboard/$', login_required(TemplateView.as_view(template_name="CRM/dashboard.html")), name="dashboard"),
+    url(r'^dashboard/$', login_required(views.Dashboard.as_view(template_name="CRM/dashboard.html")), name="dashboard"),
     url(r'^search/$', login_required(views.search), name="search"),
     url(r'^reports/$', login_required(views.ReportsView.as_view()), name="reports"),
 	###Calls###

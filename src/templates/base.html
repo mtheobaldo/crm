@@ -57,7 +57,7 @@
         <ul class="nav navbar-nav navbar-right">
           {% block navbar-right %}
             {% if user.is_authenticated %}
-              {% if user.is_staff %}
+
               <li>
               <form method="GET" action="{% url 'crm:search' %}" class="navbar-form" role="search">
               <div class="input-group">
@@ -68,6 +68,7 @@
               </div>
               </form>
               </li>
+              {% if user.is_staff %}
               <li><a href="{% url 'admin:index' %}">Admin</a></li>
               {% endif %}
               <li class="dropdown">
@@ -80,6 +81,13 @@
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="{% url 'profiles:show_self' %}">Profile</a></li>
                   <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+                  <li><a href="{% url 'crm:opportunitylist' %}">Opportunites</a></li>
+                  <li><a href="{% url 'crm:reminderlist' %}">Reminders</a></li>
+                  <li><a href="{% url 'crm:calllist' %}">Calls</a></li>
+                  <li><a href="{% url 'crm:contactlist' %}">Contacts</a></li>
+                  <li><a href="{% url 'crm:companylist' %}">Companies</a></li>
+                  <li><a href="{% url 'crm:campaignlist' %}">Campaigns</a></li>
+                  <li><a href="{% url 'crm:stagelist' %}">Stages</a></li>
                 </ul>
               </li>
             {% endif %}
@@ -88,6 +96,7 @@
         </ul>
       </div><!--/.nav-collapse -->
       {% endblock %}
+    </div>
 
   {% endblock navbar %}
 
